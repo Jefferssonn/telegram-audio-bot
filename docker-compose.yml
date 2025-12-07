@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  audio-bot:
+    build: .
+    container_name: telegram-audio-bot
+    restart: unless-stopped
+    
+    environment:
+      - BOT_TOKEN=${BOT_TOKEN}
+      - TZ=Europe/Moscow
+      - PYTHONUNBUFFERED=1
+    
+    volumes:
+      - ./temp:/app/temp
+      - ./logs:/app/logs
+    
+    networks:
+      - bot-network
+
+networks:
+  bot-network:
+    driver: bridge
+```
+
+#### 📄 `.gitignore`
+```
+.env
+temp/
+logs/
+*.pyc
+__pycache__/
+```
+
+### Шаг 3: В Portainer создайте Stack из GitHub
+
+1. Откройте Portainer → **Stacks**
+2. Нажмите **+ Add stack**
+3. **Name**: `telegram-audio-bot`
+4. **Build method**: выберите **Repository**
+
+### Шаг 4: Настройте Git репозиторий
+
+**Repository URL**: 
+```
+https://github.com/ваш-username/telegram-audio-bot
